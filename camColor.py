@@ -1,18 +1,22 @@
+from pickletools import uint8
 import cv2 
 import numpy as np
+
+class array_col:
+    pass
 
 def write_file(cent):    
     file = open("/home/dm1ttry/Рабочий стол/practice/coords.txt", "a")
     file.write(str(cent) + '\n')
     file.close()
 
-def cont():
+def cont(left, right):
     hsv = cv2.cvtColor(img, cv2.COLOR_BGR2HSV )
     thresh = cv2.inRange(hsv, left, right)      #создание и отрисовка контура
-    contours, hierarchy = cv2.findContours( thresh.copy(), cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_NONE)
+    contours, hierarchy = cv2.findContours(thresh.copy(), cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_NONE)
     return contours
 
-def center():
+def center(cnt):
     rect = cv2.minAreaRect(cnt)
     box = cv2.boxPoints(rect)
     box = np.int0(box)
@@ -31,20 +35,56 @@ if __name__ == '__main__':
     cv2.namedWindow( "camera" ) #создание окна
     cap = cv2.VideoCapture(0)
 
-    left = np.array((90, 55, 10), np.uint8)
-    right = np.array((132, 255, 255), np.uint8)
+    left_blue = np.array((90, 130, 100), np.uint8)
+    right_blue = np.array((130, 255, 255), np.uint8)
+
+    left_yellow = np.array((26, 100, 100), np.uint8)
+    right_yellow = np.array((36, 255, 255), np.uint8)
+
+    left_green = np.array((45, 170, 150), np.uint8)
+    right_green = np.array((65, 255, 255), np.uint8)
+
+    left_red = np.array((0, 150, 130), np.uint8)
+    right_red = np.array((10, 255, 255), np.uint8)
 
     while True:
         flag, img = cap.read()
         img = cv2.flip(img,1)
         try:
+            
+            any_yellow = cont(left_yellow, right_yellow)
+            any_blue = cont(left_blue, right_blue)
+            any_green = cont(left_green, right_green)
+            any_red = cont(left_red, right_red)
 
-            for cnt in cont():
-                  
-                cent, ar, box = center()
+            for cnt_y in any_yellow:
 
+                cent, ar, box = center(cnt_y)
                 if ar > 1000: #вывод координат на изображение 
-                    coords()                     
+                    coords()
+
+            for cnt_b in any_blue:
+
+                cent, ar, box = center(cnt_b)
+                if ar > 1000: 
+                    coords() 
+            
+            for cnt_g in any_green:
+
+                cent, ar, box = center(cnt_g)
+                if ar > 1000: 
+                    coords() 
+
+            for cnt_r in any_red:
+
+                cent, ar, box = center(cnt_r)
+                if ar > 1000: 
+                    coords() 
+
+
+
+
+
 
             cv2.imshow('camera', img)
 
