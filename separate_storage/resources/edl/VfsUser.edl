@@ -1,0 +1,6 @@
+entity separate_storage.VfsUser
+
+components
+{
+    vfs: kl.Vfs
+}
