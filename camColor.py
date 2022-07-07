@@ -81,11 +81,6 @@ if __name__ == '__main__':
                 if ar > 1000: 
                     coords() 
 
-
-
-
-
-
             cv2.imshow('camera', img)
 
         except:
