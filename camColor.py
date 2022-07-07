@@ -47,10 +47,7 @@ if __name__ == '__main__':
                         text = "(" + str(cent[0]) + ", " + str(cent[1]) + ")"
                         cv2.putText(img, text, (cent[0] + 10, cent[1] + 10), cv2.FONT_HERSHEY_PLAIN, 1.5, (0, 0, 128), 1, 8, 0)
                     
-                    coords()
-
-                   # write_file()
-                  
+                    coords()                  
 
 
             cv2.imshow('camera', img)
