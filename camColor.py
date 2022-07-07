@@ -40,19 +40,11 @@ if __name__ == '__main__':
         try:
 
             for cnt in cont():
-
                   
                 cent, ar, box = center()
 
-
                 if ar > 1000: #вывод координат на изображение 
-                    
-<<<<<<< HEAD
-                    coords()      
-=======
-                    coords()                  
-
->>>>>>> a96be5d195470ba5fce52fe68aea346686cfc4fe
+                    coords()                     
 
             cv2.imshow('camera', img)
 
