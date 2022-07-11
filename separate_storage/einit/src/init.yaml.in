@@ -1,0 +1,16 @@
+entities:
+
+- task: separate_storage.UserManager
+  path: UserManager
+  name: separate_storage.UserManager
+  connections:
+  - target: separate_storage.VfsUser
+    id: {var: _VFS_CONNECTION_ID, include: vfs/defs.h}
+
+
+- task: separate_storage.VfsUser
+  path: VfsUser
+  name: separate_storage.VfsUser
+@INIT_VfsUser_ENTITY_CONNECTIONS@
+
+@INIT_EXTERNAL_ENTITIES@

@@ -1,0 +1,57 @@
+/* Include internal and external security policies. */
+use internal._
+use external._
+
+/* Only for x86 platform. */
+use EDL kl.drivers.ATA
+use EDL kl.drivers.PCIE
+
+request src=kl.drivers.ATA, dst=kl.drivers.PCIE
+{
+    grant()
+}
+
+response src=kl.drivers.PCIE, dst=kl.drivers.ATA
+{
+    grant()
+}
+
+request src=kl.drivers.ATA, dst=kl.core.Core
+{
+    grant()
+}
+
+response src=kl.core.Core, dst=kl.drivers.ATA
+{
+    grant()
+}
+
+request src=kl.drivers.PCIE, dst=kl.core.Core
+{
+    grant()
+}
+
+response src=kl.core.Core, dst=kl.drivers.PCIE
+{
+    grant()
+}
+
+request src=separate_storage.VfsUser, dst=kl.drivers.ATA
+{
+    grant()
+}
+
+response src=kl.drivers.ATA, dst=separate_storage.VfsUser
+{
+    grant()
+}
+
+
+/**
+ * Next policy enables ATA driver to interact with security monitor.
+ * It enables to register new port.
+ */
+security src=kl.drivers.ATA
+{
+    grant ()
+}

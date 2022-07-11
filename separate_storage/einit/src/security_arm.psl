@@ -1,0 +1,56 @@
+/* Include internal and external security policies. */
+use internal._
+use external._
+
+/* Only for arm or aarch64 platforms. */
+use EDL kl.drivers.SDCard
+use EDL kl.drivers.BSP
+
+request src=kl.drivers.SDCard, dst=kl.drivers.BSP
+{
+    grant()
+}
+
+response src=kl.drivers.BSP, dst=kl.drivers.SDCard
+{
+    grant()
+}
+
+request src=kl.drivers.BSP, dst=kl.core.Core
+{
+    grant()
+}
+
+response src=kl.core.Core, dst=kl.drivers.BSP
+{
+    grant()
+}
+
+request src=kl.drivers.SDCard, dst=kl.core.Core
+{
+    grant()
+}
+
+response src=kl.core.Core, dst=kl.drivers.SDCard
+{
+    grant()
+}
+
+request src=separate_storage.VfsUser, dst=kl.drivers.SDCard
+{
+    grant()
+}
+
+response src=kl.drivers.SDCard, dst=separate_storage.VfsUser
+{
+    grant()
+}
+
+/**
+ * Next policy enables ATA driver to interact with security monitor.
+ * It enables to register new port.
+ */
+security src=kl.drivers.SDCard
+{
+    grant ()
+}

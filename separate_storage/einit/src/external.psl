@@ -1,0 +1,61 @@
+use nk.base._
+
+/**
+ * This code includes EDL descriptions of correspondig external
+ * (non-provided by SDK) entities.
+ */
+use EDL separate_storage.UserManager
+use EDL separate_storage.VfsUser
+
+
+/**
+ * Next code enables to send requests from external entities to KOS kernel
+ * and get responses. It makes able to use system calls by external entities.
+ * Caution! This rule is strictly for early-stage development as it
+ * exposes a variety of system services that can be invoked by an attacker.
+ * An audit must be performed to determine minimal set of methods to allow.
+ */
+request src=separate_storage.UserManager, dst=kl.core.Core
+{
+    grant ()
+}
+
+response src=kl.core.Core, dst=separate_storage.UserManager
+{
+    grant ()
+}
+
+
+request src=separate_storage.VfsUser, dst=kl.core.Core
+{
+    grant ()
+}
+
+response src=kl.core.Core, dst=separate_storage.VfsUser
+{
+    grant ()
+}
+
+/**
+ * Next policies enables interactions between external entities.
+ */
+request src=separate_storage.UserManager, dst=separate_storage.VfsUser
+{
+    grant ()
+}
+
+response src=separate_storage.VfsUser, dst=separate_storage.UserManager
+{
+    grant ()
+}
+
+request src=separate_storage.UserManager, dst=separate_storage.VfsUser, endpoint=vfs.server, method=Mount
+{
+    deny ()
+}
+
+response src=separate_storage.VfsUser, dst=separate_storage.UserManager, endpoint=vfs.server, method=Mount
+{
+    deny ()
+}
+
