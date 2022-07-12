@@ -1,3 +1,4 @@
+
 import numpy as np
 import math
 
@@ -16,8 +17,9 @@ def read_file():
         print(kaif)
 read_file()
 
-"""def take_coords():  #считывание координат положения роботаи  запись их в массив    
-    coords_rob = np.array([])  #[x0, y0, x1, y1]
+
+def take_coords():  #считывание координат положения роботаи  запись их в массив    
+    coords_rob = np.array([])  #[x0, y0, x1, y1]  
     coords_dot = np.array([])  #[x0, y0]
     return coords_rob, coords_dot   
 
@@ -54,4 +56,4 @@ while (cp > 0):    #ПРОВЕРИТЬ УСЛОВИЕ ДЛЯ НАЧАЛЬНОГ�
 
     
     cp = cp - 1
-    """
+  
