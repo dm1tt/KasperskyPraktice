@@ -1,4 +1,8 @@
+<<<<<<< HEAD
 import json
+=======
+
+>>>>>>> 27b296e845f6231f8a58fe0326dc6efbc3a9f604
 import numpy as np
 import math
 from camColor import calc
@@ -20,8 +24,16 @@ def read_file():
 cam.show()
 print(read_to_array())
 
+<<<<<<< HEAD
 array = read_to_array()
 print(array[0][1])
+=======
+
+def take_coords():  #считывание координат положения роботаи  запись их в массив    
+    coords_rob = np.array([])  #[x0, y0, x1, y1]  
+    coords_dot = np.array([])  #[x0, y0]
+    return coords_rob, coords_dot   
+>>>>>>> 27b296e845f6231f8a58fe0326dc6efbc3a9f604
 
 for i in range(len(array) - 1):
 
@@ -49,4 +61,4 @@ while (cp > 0):    #ПРОВЕРИТЬ УСЛОВИЕ ДЛЯ НАЧАЛЬНОГ�
     angle()
     length()
     cp = cp - 1
-    """
+  

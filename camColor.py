@@ -22,6 +22,13 @@ class calc:
         
         self.json_data = []
 
+<<<<<<< HEAD
+=======
+    def write_file(self, cent):             #запись в файл
+        file = open("/home/dm1ttry/Рабочий стол/practice/coords.txt", "a")
+        file.write(str(cent) + '\n')
+        file.close()
+>>>>>>> 27b296e845f6231f8a58fe0326dc6efbc3a9f604
 
     def write_file(self, cent):             #запись в файл
        self.json_data.append({
@@ -39,8 +46,12 @@ class calc:
         rect = cv2.minAreaRect(cnt)
         box = cv2.boxPoints(rect)
         box = np.int0(box)
+<<<<<<< HEAD
         center = (int(rect[0][0]),int(rect[0][1]))  
 
+=======
+        center = (int(rect[0][0]),int(rect[0][1]))    #rect[0][0] - x; rect[0][1] - y !!!!!!!!!!!!!!!  надо эти точки передать в trajectory.py
+>>>>>>> 27b296e845f6231f8a58fe0326dc6efbc3a9f604
         area = int(rect[1][0]*rect[1][1])
         return center, area, box
 
