@@ -6,25 +6,28 @@ class calc:
         cv2.namedWindow( "camera" ) #создание окна
         self.cap = cv2.VideoCapture(0)
 
-        self.left_blue = np.array((90, 130, 100), np.uint8)
+        self.left_blue = np.array((90, 25, 55), np.uint8)
         self.right_blue = np.array((130, 255, 255), np.uint8)
 
-        self.left_yellow = np.array((26, 100, 100), np.uint8)
+        self.left_yellow = np.array((26, 91, 84), np.uint8)
         self.right_yellow = np.array((36, 255, 255), np.uint8)
+        
+        
 
         self.left_green = np.array((45, 170, 150), np.uint8)
         self.right_green = np.array((65, 255, 255), np.uint8)
 
-        self.left_red = np.array((0, 150, 130), np.uint8)
-        self.right_red = np.array((10, 255, 255), np.uint8)
-
+        self.left_red = np.array((168, 38, 120), np.uint8)
+        self.right_red = np.array((180, 255, 255), np.uint8)
         
+        self.json_data = []
 
-    def write_file(self, morgen):             #запись в файл
-        file = open("/home/dm1ttry/Рабочий стол/practice/coords.txt", "a")
-        file.write(str(morgen) + '\n')
-        file.close()
 
+    def write_file(self, cent):             #запись в файл
+       self.json_data.append({
+            "id" : len(self.json_data),
+            "point" : [cent[0], cent[1]]
+       })
 
     def cont(self,left, right, img):           #наложение маски
         hsv = cv2.cvtColor(img, cv2.COLOR_BGR2HSV )
@@ -37,12 +40,9 @@ class calc:
         box = cv2.boxPoints(rect)
         box = np.int0(box)
         center = (int(rect[0][0]),int(rect[0][1]))  
-        morgen = []
-        for i in range(len(morgen)):
-            morgen[i] = rect
 
         area = int(rect[1][0]*rect[1][1])
-        return center, area, box, morgen
+        return center, area, box
 
     
     def coords(self, img, box, cent):
@@ -58,12 +58,19 @@ class calc:
         
             butt = cv2.waitKey(1)
             if butt == ord('q'):
-
                 
                 any_yellow = self.cont(self.left_yellow, self.right_yellow, img)
                 any_blue = self.cont(self.left_blue, self.right_blue, img)
                 any_green = self.cont(self.left_green, self.right_green, img)
                 any_red = self.cont(self.left_red, self.right_red, img)
+
+                for cnt_g in any_green:
+
+                    cent, ar, box = self.center(cnt_g)
+                    if ar > 1000: 
+                        self.coords(img, box, cent)
+                        self.write_file(cent)
+
 
                 for cnt_y in any_yellow:
 
@@ -79,12 +86,6 @@ class calc:
                         self.coords(img, box, cent)
                         self.write_file(cent)
                 
-                for cnt_g in any_green:
-
-                    cent, ar, box = self.center(cnt_g)
-                    if ar > 1000: 
-                        self.coords(img, box, cent)
-                        self.write_file(cent)
 
                 for cnt_r in any_red:
 

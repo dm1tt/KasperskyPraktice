@@ -1,44 +1,45 @@
+import json
 import numpy as np
 import math
+from camColor import calc
+
+cam = calc()
+
+def read_to_array():
+    json_data = read_file()
+    array_of_points = []
+    for i in range(len(json_data)):
+        array_of_points.append(json_data[i]['point'])
+    return array_of_points
+
 
 def read_file():
-    file = open("/home/dm1ttry/Рабочий стол/practice/coords.txt", "r")
-    while True:
-        line = file.readline()
+    file = cam.json_data
+    return file
 
-        if not line:
-            break
-        
-        kaif = []
-        for i in range(17):
-            kaif.append(file.readline())
+cam.show()
+print(read_to_array())
 
-        print(kaif)
-read_file()
+array = read_to_array()
+print(array[0][1])
 
-"""def take_coords():  #считывание координат положения роботаи  запись их в массив    
-    coords_rob = np.array([])  #[x0, y0, x1, y1]
-    coords_dot = np.array([])  #[x0, y0]
-    return coords_rob, coords_dot   
+for i in range(len(array) - 1):
 
+    i -= 1
 
-coords_rob, coords_dot = take_coords()
-
-def moving_robot():
-    a = 2
 
 def length():
-    len = math.sqrt((coords_dot[0]-coords_rob[2]) *(coords_dot[0]-coords_rob[2]) + (coords_dot[1] - coords_rob[3]) * (coords_dot[1] - coords_rob[3]))
+    len = math.sqrt((array[i+1][i]-array[i][i])**2 +(array[i+1][i+1]-array[i][i+1])**2)
     return len
 
 def angle():
-    alfa = math.atan((coords_rob[2] - coords_rob[0])/(coords_rob[3] - coords_rob[1]))
-    phi = math.atan((coords_dot[0] - coords_rob[2])/coords_dot[1] - coords_rob[3])
+    #alfa = math.atan((coords_rob[2] - coords_rob[0])/(coords_rob[3] - coords_rob[1]))
+    phi = math.atan((array[i+1][i]-array[i][i])/(array[i+1][i+1]-array[i][i+1]))  #угол между вертикалью и стикером
     len = length()
     angle = alfa + phi
 
     return angle
-
+"""
 cp = 5  #количество чекпоинтов (ввод с руки)
 
 while (cp > 0):    #ПРОВЕРИТЬ УСЛОВИЕ ДЛЯ НАЧАЛЬНОГО ПРОБНОГО ШАГА (РАРСЧИТАТЬ В ОБЩЕМ ВИДЕ КОЛИЧЕСТВО ИТТЕРАЦИЙ)
@@ -47,11 +48,5 @@ while (cp > 0):    #ПРОВЕРИТЬ УСЛОВИЕ ДЛЯ НАЧАЛЬНОГ�
     take_coords()
     angle()
     length()
-    coords_rob[0] = coords_rob[2]
-    coords_rob[1] = coords_rob[3]
-    coords_rob[2] = coords_dot[0]
-    coords_rob[3] = coords_dot[1]
-
-    
     cp = cp - 1
     """
